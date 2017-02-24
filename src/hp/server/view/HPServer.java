@@ -20,9 +20,9 @@ public class HPServer {
 
 //        ParseBBC parseBBC = new ParseBBC();
 //        parseBBC.start();
-
-        ParseINP parseINP = new ParseINP();
-        parseINP.start();
+//
+//        ParseINP parseINP = new ParseINP();
+//        parseINP.start();
     }
     
     public static void main(String[] args) {

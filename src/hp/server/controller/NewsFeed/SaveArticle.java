@@ -1,12 +1,16 @@
 package hp.server.controller.NewsFeed;
 
 import hp.server.model.XMLModels.Article;
+import hp.server.model.XMLModels.Response;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONException;
@@ -16,20 +20,25 @@ import org.json.JSONObject;
 
 
 import static org.jsoup.Jsoup.connect;
-public class SaveArticle extends Thread{
+public class SaveArticle implements Callable<Response>
+{
 
-    Article article;
-    int articlesSaved;
+    IArticle article;
+    public int articlesSaved;
+    public Map<String,String> response = new HashMap<String,String>();
+    public Response returnResponse = new Response();
 
-    public SaveArticle(Article article,int articlesSaved) {
-        super("SaveArticleThread");
+    public SaveArticle(IArticle article,int articlesSaved)
+    {
         this.article = article;
         this.articlesSaved = articlesSaved;
     }
 
+
     @Override
-    public void run() {
-        try {
+    public Response call() throws Exception {
+        try
+        {
             Document doc = connect("http://t-simkus.com/final_project/saveArticle.php")
                     .data("title", article.getTitle())
                     .data("link", article.getLink())
@@ -40,23 +49,32 @@ public class SaveArticle extends Thread{
                     .data("thumbnail", article.getThumbnail())
                     .userAgent("Mozilla")
                     .post();
+
             JSONObject response = new JSONObject(doc.body().text());
-            System.out.println(doc.body().text());
-            int status = response.getInt("status");
-            String msg = response.getString("msg");
-            
-            if(status == 200) {
+//            System.out.println(doc.body().text());
+
+
+            returnResponse.setMsg(response.getString("msg"));
+            returnResponse.setStatus(response.getInt("status"));
+            System.out.println(returnResponse.getStatus());
+            System.out.println(returnResponse.getMsg());
+
+            if(returnResponse.getStatus() == 200)
+            {
                 this.articlesSaved++;
-                System.out.println("Article added, total added: "+this.articlesSaved);
+                System.out.println(" Number of articles saved: "+this.articlesSaved);
             }
 
-
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             e.printStackTrace();
-        } 
-        catch (JSONException ex) {
+        }
+        catch (JSONException ex)
+        {
             ex.printStackTrace();
         }
+
+        return this.returnResponse;
     }
 }

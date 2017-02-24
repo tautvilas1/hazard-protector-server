@@ -9,10 +9,7 @@ import org.w3c.dom.NodeList;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 
 /**
@@ -20,7 +17,8 @@ import java.util.concurrent.Future;
  */
 /*This class is responsible for retrieving independent rss feed*/
 
-public class ParseINP extends Thread {
+public class ParseINP implements Callable<Integer>
+{
 
     private final String url = "http://www.independent.co.uk/news/world/rss";
     private final String nsAtom = "http://www.w3.org/2005/Atom";
@@ -34,25 +32,33 @@ public class ParseINP extends Thread {
 
     public ParseINP() { }
 
-    public void run() {
+
+    @Override
+    public Integer call() throws Exception
+    {
+
         Document xmlText = null;
         ExecutorService es = Executors.newSingleThreadExecutor();
         Future f = es.submit(new ParseXML(url));
-        try {
+        try
+        {
             xmlText = (Document) f.get();
         }
-        catch (InterruptedException e) {
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
-        catch (ExecutionException e) {
+        catch (ExecutionException e)
+        {
             e.printStackTrace();
         }
 
         NodeList nodeList = xmlText.getElementsByTagName("item");
-        
+
         int count = 0,articlesSaved = 0;
 
-        for(int i = 0; i <= nodeList.getLength() - 1; i++) {
+        for(int i = 0; i <= nodeList.getLength() - 1; i++)
+        {
             Element item = (Element) nodeList.item(i);
             Article article = new Article();
             article.setTitle(item.getElementsByTagName("title").item(0).getTextContent());
@@ -63,25 +69,42 @@ public class ParseINP extends Thread {
 
             //Add image thumbnail NOT COMPLETED!
 
-
             //Add tags
-            if(item.getElementsByTagName("media:text").item(0) != null) {
+            if(item.getElementsByTagName("media:text").item(0) != null)
+            {
                 String text = item.getElementsByTagName("media:text").item(0).getTextContent();
                 String x[] = text.split(" ");
                 ArrayList<String> tags = new ArrayList<>();
-                for(int k = 0;k < x.length;k++) {
+                for(int k = 0;k < x.length;k++)
+                {
                     tags.add(x[k]);
                 }
                 article.setTags(tags);
             }
 
-            SaveArticle saveArticle = new SaveArticle(article,articlesSaved);
-            saveArticle.start();
-            
-            count++;
-        }
-        
-        System.out.println("Articles found in INP news feed: "+count);
+            ExecutorService esInner = Executors.newSingleThreadExecutor();
+            Future fInner = esInner.submit(new SaveArticle(article,articlesSaved));
+            try
+            {
+                int status = (int) fInner.get();
 
+                if(status == 200)
+                {
+                    count++;
+                }
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            catch (ExecutionException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+        System.out.println("Articles found in INP news feed: "+count);
+        return count;
     }
+
 }

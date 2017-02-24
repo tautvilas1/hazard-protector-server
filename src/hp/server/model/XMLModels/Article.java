@@ -1,5 +1,6 @@
 package hp.server.model.XMLModels;
 
+import hp.server.controller.NewsFeed.IArticle;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Tautvilas Simkus on 16/10/2016.
  */
-public class Article
+public class Article implements IArticle
 {
     private String publishDate = "";
     private String title = "";
