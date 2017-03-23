@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/commons-codec-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/commons-collections-3.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/commons-io-2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/commons-lang-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/cssparser-0.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/htmlunit-2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/htmlunit-core-js-2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/nekohtml-1.9.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/httpmime-4.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/httpcore-4.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/httpclient-4.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/sac-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/htmlunit/serializer-2.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -3,6 +3,7 @@ package hp.server.controller.NewsTemplates;
 import hp.server.controller.NewsFeed.ParseXML;
 import hp.server.controller.NewsFeed.SaveArticle;
 import hp.server.model.XMLModels.Article;
+import hp.server.model.XMLModels.Response;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,9 +16,11 @@ import java.util.concurrent.*;
  */
 /*This class is responsible for retrieving bbc rss feed*/
 
-public class ParseBBC implements Callable<Integer> {
+public class ParseBBC implements Callable<Integer>
+{
 
     private final String url = "https://feeds.bbci.co.uk/news/world/rss.xml?edition=uk";
+    private final String url2 = "http://feeds.bbci.co.uk/news/rss.xml?edition=int";
     private final String nsAtom = "http://www.w3.org/2005/Atom";
     private final String nsContent = "http://purl.org/rss/1.0/modules/content";
     private final String nsMedia = "http://search.yahoo.com/mrss";
@@ -27,25 +30,31 @@ public class ParseBBC implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call()
+    {
         Document xmlText = null;
         ExecutorService es = Executors.newSingleThreadExecutor();
         Future f = es.submit(new ParseXML(url));
-        try {
+        try
+        {
             xmlText = (Document) f.get();
         }
-        catch (InterruptedException e) {
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
-        catch (ExecutionException e) {
+        catch (ExecutionException e)
+        {
             e.printStackTrace();
         }
 
         NodeList nodeList = xmlText.getElementsByTagName("item");
         int count = 0,articlesSaved = 0;
-        for(int i = 0; i <= nodeList.getLength() - 1; i++) {
+        for(int i = 0; i <= nodeList.getLength() - 1; i++)
+        {
             Element item = (Element) nodeList.item(i);
             Article article = new Article();
+            article.setSource("BBC");
             article.setTitle(item.getElementsByTagName("title").item(0).getTextContent());
             article.setDescription(item.getElementsByTagName("description").item(0).getTextContent());
             article.setLink(item.getElementsByTagName("link").item(0).getTextContent());
@@ -60,9 +69,9 @@ public class ParseBBC implements Callable<Integer> {
             Future fInner = esInner.submit(new SaveArticle(article,articlesSaved));
             try
             {
-                int status = (int) fInner.get();
+                Response innerResponse = (Response) fInner.get();
 
-                if(status == 200)
+                if(innerResponse.getStatus() == 200)
                 {
                     count++;
                 }

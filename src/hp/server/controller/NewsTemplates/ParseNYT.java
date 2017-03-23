@@ -5,6 +5,7 @@ package hp.server.controller.NewsTemplates;
 import hp.server.controller.NewsFeed.ParseXML;
 import hp.server.controller.NewsFeed.SaveArticle;
 import hp.server.model.XMLModels.Article;
+import hp.server.model.XMLModels.Response;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -12,7 +13,8 @@ import org.w3c.dom.NodeList;
 import java.util.concurrent.*;
 
 
-public class ParseNYT implements Callable<Integer> {
+public class ParseNYT implements Callable<Integer>
+{
 
     private final String nsAtom = "http://www.w3.org/2005/Atom";
     private final String nsNyt = "http://www.nytimes.com/namespaces/rss/2.0";
@@ -25,7 +27,7 @@ public class ParseNYT implements Callable<Integer> {
 
     }
 
-    public Integer call() throws Exception
+    public Integer call()
     {
         int count = 0;
         Document xmlText;
@@ -45,6 +47,7 @@ public class ParseNYT implements Callable<Integer> {
                 Element item = (Element) nodeList.item(i);
 
                 Article article = new Article();
+                article.setSource("NYT");
                 article.setTitle(item.getElementsByTagName("title").item(0).getTextContent());
                 article.setDescription(item.getElementsByTagName("description").item(0).getTextContent());
                 article.setLink(item.getElementsByTagName("link").item(0).getTextContent());
@@ -72,9 +75,9 @@ public class ParseNYT implements Callable<Integer> {
                 Future fInner = esInner.submit(new SaveArticle(article,articlesSaved));
                 try
                 {
-                    int status = (int) fInner.get();
+                    Response innerResponse = (Response) fInner.get();
 
-                    if(status == 200)
+                    if(innerResponse.getStatus() == 200)
                     {
                         count++;
                     }

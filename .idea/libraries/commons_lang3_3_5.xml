@@ -1,0 +1,41 @@
+<component name="libraryTable">
+  <library name="commons-lang3-3.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/commons-lang3-3.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/htmlunit-driver-2.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/jna-platform-4.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/hamcrest-library-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/cglib-nodep-3.2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/hamcrest-core-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/httpclient-4.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/htmlunit-core-js-2.23.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/phantomjsdriver-1.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/httpcore-4.4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/commons-codec-1.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/commons-io-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/guava-21.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/neko-htmlunit-2.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/javax.servlet-api-3.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/jetty-io-9.4.1.v20170120.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/gson-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/jna-4.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/htmlunit-2.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/cssparser-0.9.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/jetty-util-9.4.1.v20170120.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/httpmime-4.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/commons-exec-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/sac-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/serializer-2.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/websocket-api-9.2.20.v20161216.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/websocket-client-9.2.20.v20161216.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/websocket-common-9.2.20.v20161216.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/xalan-2.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/xercesImpl-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/selenium/lib/xml-apis-1.4.01.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

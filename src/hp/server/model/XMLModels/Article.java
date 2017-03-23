@@ -1,27 +1,21 @@
 package hp.server.model.XMLModels;
 
-import hp.server.controller.NewsFeed.IArticle;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * Created by Tautvilas Simkus on 16/10/2016.
  */
-public class Article implements IArticle
+public class Article
 {
+    private int id;
     private String publishDate = "";
     private String title = "";
     private String description = "";
     private String link = "";
     private String thumbnail = "";
     private String credit = "";
+    private String fullDescription = "none";
+    private String source = "";
     private ArrayList<String> tags = new ArrayList<String>();
 
     public Article() {
@@ -136,4 +130,27 @@ public class Article implements IArticle
     }
 
 
+    public String getFullDescription() {
+        return fullDescription;
+    }
+
+    public void setFullDescription(String fullDescription) {
+        this.fullDescription = fullDescription;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 }

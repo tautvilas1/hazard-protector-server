@@ -1,13 +1,10 @@
 package hp.server.tests;
 
-import hp.server.controller.NewsFeed.IArticle;
 import hp.server.controller.NewsFeed.SaveArticle;
-import hp.server.controller.NewsTemplates.ParseBBC;
 import hp.server.model.XMLModels.Article;
 import hp.server.model.XMLModels.Response;
 import org.junit.*;
 
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +20,8 @@ import static junit.framework.TestCase.assertEquals;
 public class FirstTest
 {
     @Test
-    public void Test_Save_Article() {
+    public void Test_Save_Article()
+    {
 
         Article article = new Article();
         Random r = new Random();

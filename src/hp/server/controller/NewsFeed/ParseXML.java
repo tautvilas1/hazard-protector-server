@@ -22,7 +22,8 @@ import javax.xml.parsers.ParserConfigurationException;
 /**
  * Created by Tautvilas Simkus on 14/02/2016.
  */
-public class ParseXML implements Callable<Document> {
+public class ParseXML implements Callable<Document>
+{
     private String lookupLink;
 
     public ParseXML(String lookupLink) {
@@ -30,18 +31,14 @@ public class ParseXML implements Callable<Document> {
     }
 
     @Override
-    public Document call() throws Exception {
+    public Document call()
+    {
         return Parse();
     }
 
-    public Document Parse() throws InterruptedException, ParserConfigurationException, SAXException {
-        Document xmlText = null;
-        try {
-            xmlText = readXmlFromUrl(lookupLink);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Document Parse()
+    {
+        Document xmlText = readXmlFromUrl(lookupLink);
         return xmlText;
     }
 
@@ -50,21 +47,38 @@ public class ParseXML implements Callable<Document> {
     @return: String object with xml source
      */
 
-    private Document readXmlFromUrl(String url) throws IOException, ParserConfigurationException, SAXException
+    private Document readXmlFromUrl(String url)
     {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
-        DocumentBuilder db = dbf.newDocumentBuilder();
+        DocumentBuilder db = null;
+        Document document = null;
 
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-        conn.setConnectTimeout(5000);
-        conn.setReadTimeout(10000);
-        conn.setUseCaches(true);
-        conn.addRequestProperty("Content-Type", "text/xml; charset=utf-8");
-
-        InputSource is = new InputSource(conn.getInputStream());
-        is.setEncoding("UTF-8");
-
-        return db.parse(is);
+        try
+        {
+            db = dbf.newDocumentBuilder();
+            HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(10000);
+            conn.setUseCaches(true);
+            conn.addRequestProperty("Content-Type", "text/xml; charset=utf-8");
+            InputSource is = null;
+            is = new InputSource(conn.getInputStream());
+            is.setEncoding("UTF-8");
+            document = db.parse(is);
+        }
+        catch (SAXException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParserConfigurationException e)
+        {
+            e.printStackTrace();
+        }
+        return document;
     }
 }

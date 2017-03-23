@@ -23,12 +23,10 @@ import static org.jsoup.Jsoup.connect;
 public class SaveArticle implements Callable<Response>
 {
 
-    IArticle article;
+    Article article;
     public int articlesSaved;
-    public Map<String,String> response = new HashMap<String,String>();
-    public Response returnResponse = new Response();
 
-    public SaveArticle(IArticle article,int articlesSaved)
+    public SaveArticle(Article article,int articlesSaved)
     {
         this.article = article;
         this.articlesSaved = articlesSaved;
@@ -36,10 +34,11 @@ public class SaveArticle implements Callable<Response>
 
 
     @Override
-    public Response call() throws Exception {
+    public Response call() {
+        Response dbResponse = new Response();
         try
         {
-            Document doc = connect("http://t-simkus.com/final_project/saveArticle.php")
+            Document doc = connect("http://www.odontologijos-erdve.lt/hazardprotector/saveArticle")
                     .data("title", article.getTitle())
                     .data("link", article.getLink())
                     .data("description", article.getDescription())
@@ -47,23 +46,15 @@ public class SaveArticle implements Callable<Response>
                     .data("credit", article.getCredit())
                     .data("tags", article.getTagsString())
                     .data("thumbnail", article.getThumbnail())
+                    .data("source", article.getSource())
                     .userAgent("Mozilla")
+                    .timeout(2000)
                     .post();
 
             JSONObject response = new JSONObject(doc.body().text());
-//            System.out.println(doc.body().text());
-
-
-            returnResponse.setMsg(response.getString("msg"));
-            returnResponse.setStatus(response.getInt("status"));
-            System.out.println(returnResponse.getStatus());
-            System.out.println(returnResponse.getMsg());
-
-            if(returnResponse.getStatus() == 200)
-            {
-                this.articlesSaved++;
-                System.out.println(" Number of articles saved: "+this.articlesSaved);
-            }
+            dbResponse.setMsg(response.getString("msg"));
+            dbResponse.setStatus(response.getInt("status"));
+            System.out.println(response.toString());
 
         }
         catch (IOException e)
@@ -75,6 +66,6 @@ public class SaveArticle implements Callable<Response>
             ex.printStackTrace();
         }
 
-        return this.returnResponse;
+        return dbResponse;
     }
 }
