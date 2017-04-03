@@ -1,8 +1,8 @@
 package hp.server.tests;
 
 import hp.server.controller.NewsFeed.SaveArticle;
-import hp.server.model.XMLModels.Article;
-import hp.server.model.XMLModels.Response;
+import hp.server.model.XMLModels.Article.Article;
+import hp.server.model.XMLModels.Common.Response;
 import org.junit.*;
 
 import java.util.Random;

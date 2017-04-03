@@ -1,18 +1,12 @@
 package hp.server.controller.NewsFeed;
 
-import hp.server.model.XMLModels.Article;
-import hp.server.model.XMLModels.Response;
+import hp.server.model.XMLModels.Article.Article;
+import hp.server.model.XMLModels.Common.Response;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

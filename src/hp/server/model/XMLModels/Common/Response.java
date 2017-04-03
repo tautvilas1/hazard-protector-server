@@ -1,4 +1,4 @@
-package hp.server.model.XMLModels;
+package hp.server.model.XMLModels.Common;
 
 /**
  * Created by Tautvilas on 24/02/2017.

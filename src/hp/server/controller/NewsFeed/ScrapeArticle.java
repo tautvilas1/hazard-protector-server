@@ -1,11 +1,10 @@
 package hp.server.controller.NewsFeed;
 
-import hp.server.model.XMLModels.Article;
-import hp.server.model.XMLModels.Response;
+import hp.server.model.XMLModels.Article.Article;
+import hp.server.model.XMLModels.Common.Response;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 import java.util.List;
@@ -18,21 +17,31 @@ import java.util.concurrent.*;
 public class ScrapeArticle implements Callable<String>
 {
     private Article article;
-    public ScrapeArticle(Article article)
+    private WebDriver driver;
+    public ScrapeArticle(Article article, WebDriver driver)
     {
         this.article = article;
+        this.driver = driver;
     }
     @Override
     public String call()
     {
         String result = "";
 
-        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Tautvilas\\Documents\\Final Project\\Server v1\\src\\geckodriver\\geckodriver.exe");
-        WebDriver driver = new FirefoxDriver();
         driver.get(article.getLink());
         if(article.getSource().equals("NYT"))
         {
-            List elements = driver.findElements(By.className("story-body-text"));
+            List elements = null;
+
+            if(article.getLink().contains("/video"))
+            {
+                elements = driver.findElements(By.className("content-description"));
+            }
+            else
+            {
+                elements = driver.findElements(By.className("story-body-text"));
+            }
+
             for(int i = 0; i < elements.size();i++)
             {
                 WebElement element = (WebElement) elements.get(i);
@@ -88,7 +97,6 @@ public class ScrapeArticle implements Callable<String>
             e.printStackTrace();
         }
 
-        driver.quit();
         return result;
     }
 

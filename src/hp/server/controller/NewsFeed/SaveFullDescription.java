@@ -1,8 +1,8 @@
 package hp.server.controller.NewsFeed;
 
 
-import hp.server.model.XMLModels.Article;
-import hp.server.model.XMLModels.Response;
+import hp.server.model.XMLModels.Article.Article;
+import hp.server.model.XMLModels.Common.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.nodes.Document;
@@ -43,7 +43,6 @@ public class SaveFullDescription implements Callable<Response>
             JSONObject response = new JSONObject(doc.body().text());
             dbResponse.setMsg(response.getString("msg"));
             dbResponse.setStatus(response.getInt("status"));
-            System.out.println(response.toString());
 
         }
         catch (IOException e)

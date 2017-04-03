@@ -4,8 +4,8 @@ package hp.server.controller.NewsTemplates;
 
 import hp.server.controller.NewsFeed.ParseXML;
 import hp.server.controller.NewsFeed.SaveArticle;
-import hp.server.model.XMLModels.Article;
-import hp.server.model.XMLModels.Response;
+import hp.server.model.XMLModels.Article.Article;
+import hp.server.model.XMLModels.Common.Response;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

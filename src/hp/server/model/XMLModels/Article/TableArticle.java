@@ -1,6 +1,5 @@
-package hp.server.controller.NewsFeed;
+package hp.server.model.XMLModels.Article;
 
-import hp.server.model.XMLModels.Article;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,12 +13,12 @@ import java.util.concurrent.Callable;
 /**
  * Created by Tautvilas on 17/03/2017.
  */
-public class GetArticles implements Callable<ArrayList<Article>>
+public class TableArticle implements Callable<ArrayList<Article>>
 {
 
     private ArrayList<JSONObject> articlesList = new ArrayList<JSONObject>();
 
-    public GetArticles()
+    public TableArticle()
     {
 
     }
@@ -29,12 +28,11 @@ public class GetArticles implements Callable<ArrayList<Article>>
         try
         {
             Document doc = Jsoup.connect("http://www.odontologijos-erdve.lt/hazardprotector/getArticles.php")
-                    .followRedirects(true)
-                    .ignoreContentType(true)
+                    .data("limit","1000")
+                    .data("offset","0")
                     .timeout(10000)
                     .userAgent("Mozilla")
-                    .execute()
-                    .parse();
+                    .post();
 
 
             String body = doc.body().text();
@@ -81,7 +79,6 @@ public class GetArticles implements Callable<ArrayList<Article>>
             Article article = new Article();
             try
             {
-                System.out.println(articles.get(i).toString());
                 article.setId(Integer.parseInt(articles.get(i).getString("id")));
                 article.setTitle(articles.get(i).getString("title"));
                 article.setCredit(articles.get(i).getString("credit"));

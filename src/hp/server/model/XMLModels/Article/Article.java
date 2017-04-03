@@ -1,4 +1,4 @@
-package hp.server.model.XMLModels;
+package hp.server.model.XMLModels.Article;
 
 import java.util.ArrayList;
 
