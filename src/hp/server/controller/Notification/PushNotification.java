@@ -32,6 +32,7 @@ public class PushNotification implements Callable<Response>
 
             doc = connect("http://www.odontologijos-erdve.lt/hazardprotector/sendNotification.php")
                     .data("registrationId", user.getRegistrationId())
+                    .data("gcm_id", user.getGcm_id())
                     .userAgent("Mozilla")
                     .timeout(10000)
                     .post();
