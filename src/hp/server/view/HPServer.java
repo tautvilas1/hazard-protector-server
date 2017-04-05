@@ -284,7 +284,7 @@ public class HPServer extends TimerTask
     @Override
     public void run()
     {
-        parseFeed();
+//        parseFeed();
         generateHazardArticles();
 
     }
