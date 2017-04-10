@@ -113,21 +113,7 @@ public class Article
                 "Tags: " + getTagsString();
     }
 
-    public String validate(Article articleParam, ArrayList<Article> articlesList) {
-        String result = "Valid";
-        if(articlesList.size() > 0) {
-            for(Article article : articlesList) {
-                if(article.getTitle().equals(articleParam.getTitle())) {
-                    result = "Invalid";
-                    break;
-                }
-            }
-        }
-        else {
-            result = "No Articles In The List";
-        }
-        return result;
-    }
+
 
 
     public String getFullDescription() {

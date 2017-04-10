@@ -11,6 +11,6 @@ public class Main
     {
         HPServer server = new HPServer();
         Timer timer = new Timer();
-        timer.schedule(server,0,300000);
+        timer.schedule(server,0,600000);
     }
 }

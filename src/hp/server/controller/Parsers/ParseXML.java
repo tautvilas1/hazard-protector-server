@@ -1,4 +1,4 @@
-package hp.server.controller.NewsFeed;
+package hp.server.controller.Parsers;
 
 
 

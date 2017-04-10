@@ -16,11 +16,14 @@ import java.util.concurrent.Callable;
 public class TableArticle implements Callable<ArrayList<Article>>
 {
 
+    private int limit = 1000;
+    private int offset = 0;
     private ArrayList<JSONObject> articlesList = new ArrayList<JSONObject>();
 
-    public TableArticle()
+    public TableArticle(int limit, int offset)
     {
-
+        this.limit = limit;
+        this.offset = offset;
     }
 
     public ArrayList getData() {
@@ -28,8 +31,8 @@ public class TableArticle implements Callable<ArrayList<Article>>
         try
         {
             Document doc = Jsoup.connect("http://www.odontologijos-erdve.lt/hazardprotector/getArticles.php")
-                    .data("limit","1000")
-                    .data("offset","0")
+                    .data("limit", String.valueOf(limit))
+                    .data("offset", String.valueOf(offset))
                     .timeout(10000)
                     .userAgent("Mozilla")
                     .post();

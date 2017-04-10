@@ -1,6 +1,6 @@
-package hp.server.controller.NewsTemplates;
+package hp.server.controller.NewsTemplates.JsoupConnections;
 
-import hp.server.controller.NewsFeed.ParseXML;
+import hp.server.controller.Parsers.ParseXML;
 import hp.server.controller.NewsFeed.SaveArticle;
 import hp.server.model.XMLModels.Article.Article;
 import hp.server.model.XMLModels.Common.Response;
@@ -16,12 +16,12 @@ import java.util.concurrent.*;
  */
 /*This class is responsible for retrieving bbc rss feed*/
 
-public class ParseBBC implements Callable<Integer>
+public class ParseBBC implements Callable<Response>
 {
 
     private final String url1 = "https://feeds.bbci.co.uk/news/world/rss.xml?edition=uk";
     private final String url2 = "http://feeds.bbci.co.uk/news/rss.xml?edition=int";
-    private String[] url = {(url1),(url2)};
+    public String[] url = {(url1),(url2)};
     private final String nsAtom = "http://www.w3.org/2005/Atom";
     private final String nsContent = "http://purl.org/rss/1.0/modules/content";
     private final String nsMedia = "http://search.yahoo.com/mrss";
@@ -31,8 +31,9 @@ public class ParseBBC implements Callable<Integer>
 
 
     @Override
-    public Integer call()
+    public Response call()
     {
+        Response response = new Response();
         int count = 0,articlesSaved = 0;
         for(String source : url)
         {
@@ -53,6 +54,10 @@ public class ParseBBC implements Callable<Integer>
             }
 
             NodeList nodeList = xmlText.getElementsByTagName("item");
+            if(nodeList.getLength() > 0)
+            {
+                response.setStatus(200);
+            }
             for(int i = 0; i <= nodeList.getLength() - 1; i++)
             {
                 Element item = (Element) nodeList.item(i);
@@ -90,8 +95,9 @@ public class ParseBBC implements Callable<Integer>
             }
 
             System.out.println("Number of Articles in BBC feed: "+count);
+            response.setMsg(String.valueOf(count));
         }
 
-        return count;
+        return response;
     }
 }

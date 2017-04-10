@@ -1,26 +1,23 @@
 package hp.server.view;
 
-import hp.server.controller.NewsFeed.ParseXML;
+import hp.server.controller.NewsFeed.GetArticles;
+import hp.server.controller.NewsTemplates.Callables.GetArticlesBBC;
+import hp.server.controller.NewsTemplates.Callables.GetArticlesCBC;
+import hp.server.controller.NewsTemplates.Callables.GetArticlesEQ;
+import hp.server.controller.NewsTemplates.Callables.GetArticlesNYT;
 import hp.server.controller.Search.ArticleFinder;
 import hp.server.controller.NewsFeed.ScrapeArticle;
-import hp.server.controller.NewsTemplates.ParseBBC;
-import hp.server.controller.NewsTemplates.ParseCBC;
-import hp.server.controller.NewsTemplates.ParseEARTHQUAKES;
-import hp.server.controller.NewsTemplates.ParseNYT;
 import hp.server.controller.Search.KeywordMaker;
+import hp.server.controller.User.GetUsers;
 import hp.server.model.XMLModels.Article.Article;
-import hp.server.model.XMLModels.Article.TableArticle;
 import hp.server.model.XMLModels.Search.Keywords;
-import hp.server.model.XMLModels.User.TableUser;
 import hp.server.model.XMLModels.User.User;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
@@ -41,21 +38,8 @@ public class HPServer extends TimerTask
 
     public void getArticles()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new TableArticle());
-
-        try
-        {
-            articlesList = (ArrayList<Article>) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetArticles getArticles = new GetArticles();
+        articlesList = getArticles.returnList(1000,0);
     }
 
     public void getFullDescriptions()
@@ -94,100 +78,34 @@ public class HPServer extends TimerTask
 
     public void parseCBC()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new ParseCBC());
-
-        try
-        {
-            Integer statusCBC = (Integer) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetArticlesCBC getArticlesCBC = new GetArticlesCBC();
+        getArticlesCBC.runFeed();
     }
 
     public void parseNYT()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new ParseNYT());
-
-        try
-        {
-            Integer statusNYT = (Integer) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetArticlesNYT getArticlesNYT = new GetArticlesNYT();
+        getArticlesNYT.runFeed();
     }
 
     public void parseBBC()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new ParseBBC());
-
-        try
-        {
-            Integer statusBBC = (Integer) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetArticlesBBC getArticlesBBC = new GetArticlesBBC();
+        getArticlesBBC.runFeed();
     }
 
     public void parseEARTHQUAKES()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new ParseEARTHQUAKES());
-
-        try
-        {
-            Integer statusEARTHQUAKES = (Integer) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetArticlesEQ getArticlesEQ = new GetArticlesEQ();
+        getArticlesEQ.runFeed();
     }
 
 
     public void getUsers()
     {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        Future f = es.submit(new TableUser());
-
-        try
-        {
-            usersList = (ArrayList<User>) f.get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        GetUsers getUsers = new GetUsers();
+        usersList = getUsers.returnList();
     }
-
 
     private void makeKeywords(User user)
     {

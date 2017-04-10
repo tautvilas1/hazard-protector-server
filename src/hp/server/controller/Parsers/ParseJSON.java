@@ -1,9 +1,11 @@
-package hp.server.controller.LocationServices;
+package hp.server.controller.Parsers;
 
 
+import hp.server.model.XMLModels.Common.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.nodes.Document;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import static org.jsoup.Jsoup.connect;
 
 /**
  * Created by Tautvilas on 14/02/2016.
@@ -32,7 +36,15 @@ public class ParseJSON implements Callable<ArrayList<String>>
         ArrayList<String> addressArray = new ArrayList<String>();
         try
         {
-            JSONObject locationJSON = readJsonFromUrl(lookupLink);
+
+            Document doc = connect(lookupLink)
+                    .userAgent("Mozilla")
+                    .timeout(2000)
+                    .ignoreContentType(true)
+                    .post();
+
+            JSONObject locationJSON = new JSONObject(doc.body().text());
+
             JSONArray resultsJSON = locationJSON.getJSONArray("results");
             JSONObject firstJSON = (JSONObject) resultsJSON.get(0);
             JSONArray addressComponents = firstJSON.getJSONArray("address_components");
@@ -59,26 +71,6 @@ public class ParseJSON implements Callable<ArrayList<String>>
         }
 
         return addressArray;
-    }
-
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException
-    {
-        InputStream is = new URL(url).openStream();
-        try
-        {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            String jsonText = null, line;
-
-            while((line = rd.readLine()) != null)
-            {
-                jsonText = jsonText + "\n" + line;
-            }
-            return new JSONObject(jsonText.substring(jsonText.indexOf("{"), jsonText.lastIndexOf("}") + 1));
-        }
-        finally
-        {
-            is.close();
-        }
     }
 
 }

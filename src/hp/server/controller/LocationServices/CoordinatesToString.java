@@ -1,5 +1,7 @@
 package hp.server.controller.LocationServices;
 
+import hp.server.controller.Parsers.ParseJSON;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +12,6 @@ import java.util.concurrent.Future;
 
 /**
  * Created by Tautvilas on 14/02/2016.
- * address[0] - city , address[1] - country
  */
 public class CoordinatesToString
 {
@@ -34,7 +35,6 @@ public class CoordinatesToString
         {
             final String lookupLink = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
                     String.valueOf(latitude) + "," + String.valueOf(longitude) + "&key=AIzaSyD_bf5Bw26seqpx7IQRt3pr9zQd6j-tXLs";
-
             ExecutorService es = Executors.newSingleThreadExecutor();
             Future f = es.submit(new ParseJSON(lookupLink));
 
